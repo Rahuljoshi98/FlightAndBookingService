@@ -1,4 +1,4 @@
-// Logger.info("Successfully started the server", { label: "root" });  <----------   use this format to log data}   --------------->
+// Logger.info("Successfully started the server", { label: "root" });  <----------   use this format to log data   --------------->
 const { createLogger, format, transports } = require("winston");
 const { combine, timestamp, printf } = format;
 
