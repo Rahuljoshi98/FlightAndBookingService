@@ -5,6 +5,8 @@ const apiRoutes = require("./routes");
 
 const app = express();
 
+app.use(express.json()); // to access the request body
+app.use(express.urlencoded({ extended: true })); // to access the encoded data
 app.use("/api", apiRoutes);
 
 try {
