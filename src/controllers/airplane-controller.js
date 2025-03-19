@@ -3,6 +3,10 @@ const { AirplaneService } = require("../services");
 
 const { ErrorResponse, SuccessResponse } = require("../utils/common");
 
+/*
+ * POST : /airplane
+ * req-body : {modelNumber, capacity}
+ */
 const createAirplane = async (req, res) => {
   try {
     const airplane = await AirplaneService.createAirplane({
@@ -19,6 +23,42 @@ const createAirplane = async (req, res) => {
   }
 };
 
+/*
+ * GET : /airplane
+ * req-body : {}
+ */
+const getAirplanes = async (req, res) => {
+  try {
+    const airplanes = await AirplaneService.getAllAirplanes();
+    SuccessResponse.message = "Airplanes Fetched Successfully";
+    SuccessResponse.data = airplanes;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.error = error;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+};
+
+/*
+ * GET : /airplane/:id
+ * req-body : {}
+ */
+const getAirplane = async (req, res) => {
+  try {
+    const airplanes = await AirplaneService.getAirplane(req.params.id);
+    SuccessResponse.message = "Airplane Fetched Successfully";
+    SuccessResponse.data = airplanes;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.error = error;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+};
+
 module.exports = {
   createAirplane,
+  getAirplanes,
+  getAirplane,
 };
