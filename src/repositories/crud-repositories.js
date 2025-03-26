@@ -18,6 +18,12 @@ class CrudRepository {
         id: data,
       },
     });
+    if (!response) {
+      throw new AppError(
+        ["Not able to fetch the resource."],
+        StatusCodes.NOT_FOUND
+      );
+    }
     return response;
   }
 
