@@ -73,9 +73,41 @@ const destroyAirplanes = async (id) => {
   }
 };
 
+const updateAirplanes = async (data, id) => {
+  try {
+    const allowedFieldsToUpdate = ["modelNumber", "capacity"];
+    const fieldsToUpdate = Object.keys(data)?.reduce((acc, curr) => {
+      if (allowedFieldsToUpdate?.includes(curr)) {
+        acc[curr] = data[curr];
+      }
+      return acc;
+    }, {});
+    const response = await airplaneRepository.update(fieldsToUpdate, id);
+    return response;
+  } catch (error) {
+    if (error.statusCode === StatusCodes.NOT_FOUND) {
+      throw new AppError(
+        ["The airplane you requested to update is not present."],
+        StatusCodes.NOT_FOUND
+      );
+    } else if (error.name === "SequelizeValidationError") {
+      let explanation = [];
+      error?.errors?.forEach((err) => {
+        explanation.push(err.message);
+      });
+      throw new AppError(explanation, StatusCodes.BAD_REQUEST);
+    }
+    throw new AppError(
+      ["Can't update the Airplane."],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
 module.exports = {
   createAirplane,
   getAirplane,
   getAllAirplanes,
   destroyAirplanes,
+  updateAirplanes,
 };

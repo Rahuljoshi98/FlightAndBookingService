@@ -17,19 +17,19 @@ module.exports = {
 
     await queryInterface.bulkInsert("airplanes", [
       {
-        modelNumber: "air 212",
+        modelNumber: "air212",
         capacity: 100,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        modelNumber: "new airbus1",
+        modelNumber: "newAirbus1",
         capacity: 200,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        modelNumber: "new airbus2",
+        modelNumber: "newAirbus2",
         capacity: 200,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -48,12 +48,9 @@ module.exports = {
     await queryInterface.bulkDelete(
       "airplanes",
       {
-        [Op.or]: [
-          { modelNumber: "new airbus2" },
-          { modelNumber: "new airbus1" },
-        ],
+        [Op.or]: [{ modelNumber: "newAirbus2" }, { modelNumber: "newAirbus1" }],
       }
-      // { truncate: true }   // it will reset the PK but the where clasuse will not work i.e., it will remove all the records.
+      // { truncate: true } // it will reset the PK but the where clasuse will not work i.e., it will remove all the records.
     );
   },
 };

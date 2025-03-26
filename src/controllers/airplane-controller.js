@@ -73,9 +73,29 @@ const destroyAirplane = async (req, res) => {
   }
 };
 
+/*
+ * PATCH : /airplane/:id
+ * req-body : {modelNumber, capacity}
+ */
+const updateAirplane = async (req, res) => {
+  try {
+    const airplanes = await AirplaneService.updateAirplanes(
+      req.body,
+      req.params.id
+    );
+    SuccessResponse.message = "Airplane Updated Successfully";
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.error = error;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+};
+
 module.exports = {
   createAirplane,
   getAirplanes,
   getAirplane,
   destroyAirplane,
+  updateAirplane,
 };
