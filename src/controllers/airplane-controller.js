@@ -65,6 +65,7 @@ const destroyAirplane = async (req, res) => {
   try {
     const airplanes = await AirplaneService.destroyAirplanes(req.params.id);
     SuccessResponse.message = "Airplane Deleted Successfully";
+    SuccessResponse.data = {};
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.message = "Something Went Wrong";
@@ -84,6 +85,7 @@ const updateAirplane = async (req, res) => {
       req.params.id
     );
     SuccessResponse.message = "Airplane Updated Successfully";
+    SuccessResponse.data = {};
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.message = "Something Went Wrong";
