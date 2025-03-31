@@ -1,8 +1,8 @@
-const { StatusCodes } = require("http-status-codes");
+const { StatusCodes } = require('http-status-codes');
 
-const { CityRepository } = require("../repositories");
-const AppError = require("../utils/errors/app-error");
-const { GetAllowedFieldsToEdit } = require("../utils/common");
+const { CityRepository } = require('../repositories');
+const AppError = require('../utils/errors/app-error');
+const { GetAllowedFieldsToEdit } = require('../utils/common');
 
 const cityRepository = new CityRepository();
 
@@ -12,8 +12,8 @@ const createCity = async (data) => {
     return city;
   } catch (error) {
     if (
-      error.name === "SequelizeUniqueConstraintError" ||
-      error.name === "SequelizeValidationError"
+      error.name === 'SequelizeUniqueConstraintError' ||
+      error.name === 'SequelizeValidationError'
     ) {
       let explanation = [];
       error?.errors?.forEach((err) => {
@@ -31,22 +31,22 @@ const createCity = async (data) => {
 
 const updateCity = async (data, id) => {
   try {
-    const allowedFields = ["name"];
+    const allowedFields = ['name'];
     const fieldsToUpdate = GetAllowedFieldsToEdit(allowedFields, data);
     const response = await cityRepository.update(fieldsToUpdate, id);
     return response;
   } catch (error) {
     if (error.statusCode === StatusCodes.BAD_REQUEST) {
       throw new AppError(
-        ["No data provided to update the city"],
+        ['No data provided to update the city'],
         StatusCodes.BAD_REQUEST
       );
     } else if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        ["The city you requested to update is not present."],
+        ['The city you requested to update is not present.'],
         StatusCodes.NOT_FOUND
       );
-    } else if (error.name === "SequelizeValidationError") {
+    } else if (error.name === 'SequelizeValidationError') {
       let explanation = [];
       error?.errors?.forEach((err) => {
         explanation.push(err.message);
@@ -67,7 +67,7 @@ const destroyCity = async (id) => {
   } catch (error) {
     if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        ["The city you requested to delete is not present."],
+        ['The city you requested to delete is not present.'],
         StatusCodes.NOT_FOUND
       );
     }
@@ -81,5 +81,5 @@ const destroyCity = async (id) => {
 module.exports = {
   createCity,
   updateCity,
-  destroyCity,
+  destroyCity
 };

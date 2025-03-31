@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Airplane extends Model {
     /**
@@ -17,21 +17,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isAlphanumeric: true,
-        },
+          isAlphanumeric: true
+        }
       },
       capacity: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
         validate: {
-          max: 200,
-        },
-      },
+          max: 200
+        }
+      }
     },
     {
       sequelize,
-      modelName: "Airplane",
+      modelName: 'Airplane'
     }
   );
   return Airplane;

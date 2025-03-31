@@ -1,8 +1,8 @@
-const { StatusCodes } = require("http-status-codes");
+const { StatusCodes } = require('http-status-codes');
 
-const { AirplaneRepository } = require("../repositories");
-const AppError = require("../utils/errors/app-error");
-const { GetAllowedFieldsToEdit } = require("../utils/common");
+const { AirplaneRepository } = require('../repositories');
+const AppError = require('../utils/errors/app-error');
+const { GetAllowedFieldsToEdit } = require('../utils/common');
 
 const airplaneRepository = new AirplaneRepository();
 
@@ -11,7 +11,7 @@ const createAirplane = async (data) => {
     const airplane = await airplaneRepository.create(data);
     return airplane;
   } catch (error) {
-    if (error.name === "SequelizeValidationError") {
+    if (error.name === 'SequelizeValidationError') {
       let explanation = [];
       error?.errors?.forEach((err) => {
         explanation.push(err.message);
@@ -33,7 +33,7 @@ const getAirplane = async (id) => {
   } catch (error) {
     if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        ["The airplane you requested is not present."],
+        ['The airplane you requested is not present.'],
         StatusCodes.NOT_FOUND
       );
     }
@@ -63,7 +63,7 @@ const destroyAirplanes = async (id) => {
   } catch (error) {
     if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        ["The airplane you requested to delete is not present."],
+        ['The airplane you requested to delete is not present.'],
         StatusCodes.NOT_FOUND
       );
     }
@@ -76,22 +76,22 @@ const destroyAirplanes = async (id) => {
 
 const updateAirplanes = async (data, id) => {
   try {
-    const allowedFields = ["modelNumber", "capacity"];
+    const allowedFields = ['modelNumber', 'capacity'];
     const fieldsToUpdate = GetAllowedFieldsToEdit(allowedFields, data);
     const response = await airplaneRepository.update(fieldsToUpdate, id);
     return response;
   } catch (error) {
     if (error.statusCode === StatusCodes.BAD_REQUEST) {
       throw new AppError(
-        ["No data provided to update the airplane"],
+        ['No data provided to update the airplane'],
         StatusCodes.BAD_REQUEST
       );
     } else if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        ["The airplane you requested to update is not present."],
+        ['The airplane you requested to update is not present.'],
         StatusCodes.NOT_FOUND
       );
-    } else if (error.name === "SequelizeValidationError") {
+    } else if (error.name === 'SequelizeValidationError') {
       let explanation = [];
       error?.errors?.forEach((err) => {
         explanation.push(err.message);
@@ -110,5 +110,5 @@ module.exports = {
   getAirplane,
   getAllAirplanes,
   destroyAirplanes,
-  updateAirplanes,
+  updateAirplanes
 };

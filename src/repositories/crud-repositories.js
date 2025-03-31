@@ -1,6 +1,6 @@
-const { StatusCodes } = require("http-status-codes");
-const { Logger } = require("../config");
-const AppError = require("../utils/errors/app-error");
+const { StatusCodes } = require('http-status-codes');
+const { Logger } = require('../config');
+const AppError = require('../utils/errors/app-error');
 
 class CrudRepository {
   constructor(model) {
@@ -15,12 +15,12 @@ class CrudRepository {
   async destroy(data) {
     const response = await this.model.destroy({
       where: {
-        id: data,
-      },
+        id: data
+      }
     });
     if (!response) {
       throw new AppError(
-        ["Not able to fetch the resource."],
+        ['Not able to fetch the resource.'],
         StatusCodes.NOT_FOUND
       );
     }
@@ -31,7 +31,7 @@ class CrudRepository {
     const response = await this.model.findByPk(data);
     if (!response) {
       throw new AppError(
-        ["Not able to fetch the resource"],
+        ['Not able to fetch the resource'],
         StatusCodes.NOT_FOUND
       );
     }
@@ -47,18 +47,18 @@ class CrudRepository {
     // data -> {col: value, ...}
     if (Object.keys(data)?.length === 0) {
       throw new AppError(
-        ["No Data Provided To Update."],
+        ['No Data Provided To Update.'],
         StatusCodes.BAD_REQUEST
       );
     }
     const response = await this.model.update(data, {
       where: {
-        id: id,
-      },
+        id: id
+      }
     });
     if (!response[0]) {
       throw new AppError(
-        ["Not able to fetch the resource."],
+        ['Not able to fetch the resource.'],
         StatusCodes.NOT_FOUND
       );
     }

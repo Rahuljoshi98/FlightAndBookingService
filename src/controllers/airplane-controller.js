@@ -1,7 +1,7 @@
-const { StatusCodes } = require("http-status-codes");
-const { AirplaneService } = require("../services");
+const { StatusCodes } = require('http-status-codes');
+const { AirplaneService } = require('../services');
 
-const { ErrorResponse, SuccessResponse } = require("../utils/common");
+const { ErrorResponse, SuccessResponse } = require('../utils/common');
 
 /*
  * POST : /airplane
@@ -11,13 +11,13 @@ const createAirplane = async (req, res) => {
   try {
     const airplane = await AirplaneService.createAirplane({
       modelNumber: req.body.modelNumber,
-      capacity: req.body.capacity,
+      capacity: req.body.capacity
     });
-    SuccessResponse.message = "Airplane Created Successfully";
+    SuccessResponse.message = 'Airplane Created Successfully';
     SuccessResponse.data = airplane;
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error) {
-    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.message = 'Something Went Wrong';
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
@@ -30,11 +30,11 @@ const createAirplane = async (req, res) => {
 const getAirplanes = async (req, res) => {
   try {
     const airplanes = await AirplaneService.getAllAirplanes();
-    SuccessResponse.message = "Airplanes Fetched Successfully";
+    SuccessResponse.message = 'Airplanes Fetched Successfully';
     SuccessResponse.data = airplanes;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
-    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.message = 'Something Went Wrong';
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
@@ -47,11 +47,11 @@ const getAirplanes = async (req, res) => {
 const getAirplane = async (req, res) => {
   try {
     const airplanes = await AirplaneService.getAirplane(req.params.id);
-    SuccessResponse.message = "Airplane Fetched Successfully";
+    SuccessResponse.message = 'Airplane Fetched Successfully';
     SuccessResponse.data = airplanes;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
-    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.message = 'Something Went Wrong';
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
@@ -64,11 +64,11 @@ const getAirplane = async (req, res) => {
 const destroyAirplane = async (req, res) => {
   try {
     const airplanes = await AirplaneService.destroyAirplanes(req.params.id);
-    SuccessResponse.message = "Airplane Deleted Successfully";
+    SuccessResponse.message = 'Airplane Deleted Successfully';
     SuccessResponse.data = {};
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
-    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.message = 'Something Went Wrong';
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
@@ -84,11 +84,11 @@ const updateAirplane = async (req, res) => {
       req.body,
       req.params.id
     );
-    SuccessResponse.message = "Airplane Updated Successfully";
+    SuccessResponse.message = 'Airplane Updated Successfully';
     SuccessResponse.data = {};
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
-    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.message = 'Something Went Wrong';
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
@@ -99,5 +99,5 @@ module.exports = {
   getAirplanes,
   getAirplane,
   destroyAirplane,
-  updateAirplane,
+  updateAirplane
 };

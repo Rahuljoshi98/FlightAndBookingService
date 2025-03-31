@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -15,25 +15,25 @@ module.exports = {
      * }], {});
      */
 
-    await queryInterface.bulkInsert("airplanes", [
+    await queryInterface.bulkInsert('airplanes', [
       {
-        modelNumber: "air212",
+        modelNumber: 'air212',
         capacity: 100,
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
-        modelNumber: "newAirbus1",
+        modelNumber: 'newAirbus1',
         capacity: 200,
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
-        modelNumber: "newAirbus2",
+        modelNumber: 'newAirbus2',
         capacity: 200,
         createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+        updatedAt: new Date()
+      }
     ]);
   },
 
@@ -46,11 +46,11 @@ module.exports = {
      */
 
     await queryInterface.bulkDelete(
-      "airplanes",
+      'airplanes',
       {
-        [Op.or]: [{ modelNumber: "newAirbus2" }, { modelNumber: "newAirbus1" }],
+        [Op.or]: [{ modelNumber: 'newAirbus2' }, { modelNumber: 'newAirbus1' }]
       }
       // { truncate: true } // it will reset the PK but the where clasuse will not work i.e., it will remove all the records.
     );
-  },
+  }
 };
