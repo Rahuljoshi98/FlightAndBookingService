@@ -46,7 +46,10 @@ const updateCity = async (data, id) => {
         ['The city you requested to update is not present.'],
         StatusCodes.NOT_FOUND
       );
-    } else if (error.name === 'SequelizeValidationError') {
+    } else if (
+      error.name === 'SequelizeValidationError' ||
+      error.name === 'SequelizeUniqueConstraintError'
+    ) {
       let explanation = [];
       error?.errors?.forEach((err) => {
         explanation.push(err.message);
