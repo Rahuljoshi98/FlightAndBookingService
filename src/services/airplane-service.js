@@ -81,7 +81,12 @@ const updateAirplanes = async (data, id) => {
     const response = await airplaneRepository.update(fieldsToUpdate, id);
     return response;
   } catch (error) {
-    if (error.statusCode === StatusCodes.NOT_FOUND) {
+    if (error.statusCode === StatusCodes.BAD_REQUEST) {
+      throw new AppError(
+        ["No data provided to update the airplane"],
+        StatusCodes.BAD_REQUEST
+      );
+    } else if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
         ["The airplane you requested to update is not present."],
         StatusCodes.NOT_FOUND

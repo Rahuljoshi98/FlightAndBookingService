@@ -45,6 +45,12 @@ class CrudRepository {
 
   async update(data, id) {
     // data -> {col: value, ...}
+    if (Object.keys(data)?.length === 0) {
+      throw new AppError(
+        ["No Data Provided To Update."],
+        StatusCodes.BAD_REQUEST
+      );
+    }
     const response = await this.model.update(data, {
       where: {
         id: id,
