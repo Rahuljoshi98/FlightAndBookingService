@@ -1,8 +1,8 @@
-const { StatusCodes } = require("http-status-codes");
+const { StatusCodes } = require('http-status-codes');
 
-const { CityService } = require("../services");
+const { CityService } = require('../services');
 
-const { ErrorResponse, SuccessResponse } = require("../utils/common");
+const { ErrorResponse, SuccessResponse } = require('../utils/common');
 
 /*
  * POST : /cities
@@ -11,13 +11,13 @@ const { ErrorResponse, SuccessResponse } = require("../utils/common");
 const createCity = async (req, res) => {
   try {
     const city = await CityService.createCity({
-      name: req.body.name,
+      name: req.body.name
     });
-    SuccessResponse.message = "City Created Successfully";
+    SuccessResponse.message = 'City Created Successfully';
     SuccessResponse.data = city;
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error) {
-    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.message = 'Something Went Wrong';
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
@@ -30,11 +30,11 @@ const createCity = async (req, res) => {
 const destroyCity = async (req, res) => {
   try {
     const city = await CityService.destroyCity(req.params.id);
-    SuccessResponse.message = "City Deleted Successfully";
+    SuccessResponse.message = 'City Deleted Successfully';
     SuccessResponse.data = {};
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
-    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.message = 'Something Went Wrong';
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
@@ -47,11 +47,11 @@ const destroyCity = async (req, res) => {
 const updateCity = async (req, res) => {
   try {
     const city = await CityService.updateCity(req.body, req.params.id);
-    SuccessResponse.message = "City Updated Successfully";
+    SuccessResponse.message = 'City Updated Successfully';
     SuccessResponse.data = {};
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
-    ErrorResponse.message = "Something Went Wrong";
+    ErrorResponse.message = 'Something Went Wrong';
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
@@ -60,5 +60,5 @@ const updateCity = async (req, res) => {
 module.exports = {
   createCity,
   destroyCity,
-  updateCity,
+  updateCity
 };
