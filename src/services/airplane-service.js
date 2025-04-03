@@ -38,7 +38,7 @@ const getAirplane = async (id) => {
       );
     }
     throw new AppError(
-      ["Can't Create the Airplane."],
+      ["Can't Get the Airplane."],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
