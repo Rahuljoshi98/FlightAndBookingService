@@ -1,15 +1,15 @@
 const { StatusCodes } = require('http-status-codes');
 
-const { AirplaneRepository } = require('../repositories');
+const { AirportRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { GetAllowedFieldsToEdit } = require('../utils/common');
 
-const airplaneRepository = new AirplaneRepository();
+const airportRepository = new AirportRepository();
 
-const createAirplane = async (data) => {
+const createAirport = async (data) => {
   try {
-    const airplane = await airplaneRepository.create(data);
-    return airplane;
+    const airport = await airportRepository.create(data);
+    return airport;
   } catch (error) {
     if (
       error.name === 'SequelizeUniqueConstraintError' ||
@@ -23,75 +23,75 @@ const createAirplane = async (data) => {
       throw new AppError(explanation, StatusCodes.BAD_REQUEST);
     }
     throw new AppError(
-      ["Can't Create the Airplane."],
+      ["Can't Create the Airport."],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 };
 
-const getAirplane = async (id) => {
+const getAirport = async (id) => {
   try {
-    const airplane = await airplaneRepository.get(id);
-    return airplane;
+    const airport = await airportRepository.get(id);
+    return airport;
   } catch (error) {
     if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        ['The airplane you requested is not present.'],
+        ['The airport you requested is not present.'],
         StatusCodes.NOT_FOUND
       );
     }
     throw new AppError(
-      ["Can't Get the Airplane."],
+      ["Can't Get the Airport."],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 };
 
-const getAllAirplanes = async () => {
+const getAllAirports = async () => {
   try {
-    const airplanes = await airplaneRepository.getAll();
-    return airplanes;
+    const airport = await airportRepository.getAll();
+    return airport;
   } catch (error) {
     throw new AppError(
-      ["Can't fetch the data of all the Airplanes."],
+      ["Can't fetch the data of all the Airports."],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 };
 
-const destroyAirplanes = async (id) => {
+const destroyAirport = async (id) => {
   try {
-    const response = await airplaneRepository.destroy(id);
+    const response = await airportRepository.destroy(id);
     return response;
   } catch (error) {
     if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        ['The airplane you requested to delete is not present.'],
+        ['The airport you requested to delete is not present.'],
         StatusCodes.NOT_FOUND
       );
     }
     throw new AppError(
-      ["Can't delete the Airplane."],
+      ["Can't delete the Airport."],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 };
 
-const updateAirplanes = async (data, id) => {
+const updateAirport = async (data, id) => {
   try {
-    const allowedFields = ['modelNumber', 'capacity'];
+    const allowedFields = ['name', 'code', 'address', 'cityId'];
     const fieldsToUpdate = GetAllowedFieldsToEdit(allowedFields, data);
-    const response = await airplaneRepository.update(fieldsToUpdate, id);
+    const response = await airportRepository.update(fieldsToUpdate, id);
     return response;
   } catch (error) {
     if (error.statusCode === StatusCodes.BAD_REQUEST) {
       throw new AppError(
-        ['No data provided to update the airplane'],
+        ['No data provided to update the airport'],
         StatusCodes.BAD_REQUEST
       );
     } else if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        ['The airplane you requested to update is not present.'],
+        ['The airport you requested to update is not present.'],
         StatusCodes.NOT_FOUND
       );
     } else if (
@@ -105,16 +105,16 @@ const updateAirplanes = async (data, id) => {
       throw new AppError(explanation, StatusCodes.BAD_REQUEST);
     }
     throw new AppError(
-      ["Can't update the Airplane."],
+      ["Can't update the Airport."],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 };
 
 module.exports = {
-  createAirplane,
-  getAirplane,
-  getAllAirplanes,
-  destroyAirplanes,
-  updateAirplanes
+  createAirport,
+  getAirport,
+  getAllAirports,
+  destroyAirport,
+  updateAirport
 };
