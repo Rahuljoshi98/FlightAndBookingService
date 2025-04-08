@@ -10,8 +10,7 @@ const { ErrorResponse, SuccessResponse } = require('../utils/common');
 const createAirport = async (req, res) => {
   try {
     // to check if the city is present or not
-    // const city = await CityService.getCity(req.body.cityId);
-
+    const city = await CityService.getCity(req.body.cityId);
     const airport = await AirportService.createAirport({
       name: req.body.name,
       code: req.body.code,
@@ -85,10 +84,11 @@ const destroyAirport = async (req, res) => {
  */
 const updateAirport = async (req, res) => {
   try {
-    const airplanes = await AirportService.updateAirport(
-      req.body,
-      req.params.id
-    );
+    if (req.body.cityId) {
+      // if the request body contain the request to change the city id then check if the city is present or not
+      const city = await CityService.getCity(req.body.cityId);
+    }
+    const airport = await AirportService.updateAirport(req.body, req.params.id);
     SuccessResponse.message = 'Airport Updated Successfully';
     SuccessResponse.data = {};
     return res.status(StatusCodes.OK).json(SuccessResponse);
