@@ -53,14 +53,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       price: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false
       },
       boardingGate: {
         type: DataTypes.STRING
       },
       totalSeats: {
-        type: DataTypes.INTEGER(10, 2),
+        type: DataTypes.INTEGER,
         allowNull: false
       }
     },
