@@ -1,20 +1,18 @@
 const { StatusCodes } = require('http-status-codes');
-const moment = require('moment');
 
 const { FlightRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
-const { GetAllowedFieldsToEdit } = require('../utils/common');
+const { DateTimeHelper } = require('../utils/helpers');
 
 const flightRepository = new FlightRepository();
 
 const createFlight = async (data) => {
   try {
-    const arrivalTime = moment(data.arrivalTime, 'YYYY-MM-DD HH:mm:ss');
-    const departureTime = moment(data.departureTime, 'YYYY-MM-DD HH:mm:ss');
-    if (
-      arrivalTime.isBefore(departureTime) ||
-      arrivalTime.isSame(departureTime)
-    ) {
+    const isValidTime = DateTimeHelper.compareTimes(
+      data.arrivalTime,
+      data.departureTime
+    );
+    if (!isValidTime) {
       throw new AppError(
         ['Departure time should be less than the arrival time.'],
         StatusCodes.BAD_REQUEST

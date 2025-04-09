@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const { AirportRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
-const { GetAllowedFieldsToEdit } = require('../utils/common');
+const { GetAllowedFieldsToEdit } = require('../utils/helpers');
 
 const airportRepository = new AirportRepository();
 
@@ -80,7 +80,10 @@ const destroyAirport = async (id) => {
 const updateAirport = async (data, id) => {
   try {
     const allowedFields = ['name', 'code', 'address', 'cityId'];
-    const fieldsToUpdate = GetAllowedFieldsToEdit(allowedFields, data);
+    const fieldsToUpdate = GetAllowedFieldsToEdit.allowedFields(
+      allowedFields,
+      data
+    );
     const response = await airportRepository.update(fieldsToUpdate, id);
     return response;
   } catch (error) {

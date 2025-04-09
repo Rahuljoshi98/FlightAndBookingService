@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const { CityRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
-const { GetAllowedFieldsToEdit } = require('../utils/common');
+const { GetAllowedFieldsToEdit } = require('../utils/helpers');
 
 const cityRepository = new CityRepository();
 
@@ -32,7 +32,10 @@ const createCity = async (data) => {
 const updateCity = async (data, id) => {
   try {
     const allowedFields = ['name'];
-    const fieldsToUpdate = GetAllowedFieldsToEdit(allowedFields, data);
+    const fieldsToUpdate = GetAllowedFieldsToEdit.allowedFields(
+      allowedFields,
+      data
+    );
     const response = await cityRepository.update(fieldsToUpdate, id);
     return response;
   } catch (error) {

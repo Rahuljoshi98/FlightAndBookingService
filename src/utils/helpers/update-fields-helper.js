@@ -1,4 +1,4 @@
-const getAllowedFields = (allowedFields, data) => {
+const allowedFields = (allowedFields, data) => {
   let fieldsToUpdate = {};
   fieldsToUpdate = Object.keys(data)?.reduce((acc, curr) => {
     if (allowedFields?.includes(curr)) {
@@ -10,4 +10,6 @@ const getAllowedFields = (allowedFields, data) => {
   return fieldsToUpdate;
 };
 
-module.exports = getAllowedFields;
+module.exports = {
+  allowedFields
+};

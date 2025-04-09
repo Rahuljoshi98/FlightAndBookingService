@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const { AirplaneRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
-const { GetAllowedFieldsToEdit } = require('../utils/common');
+const { GetAllowedFieldsToEdit } = require('../utils/helpers');
 
 const airplaneRepository = new AirplaneRepository();
 
@@ -80,7 +80,10 @@ const destroyAirplanes = async (id) => {
 const updateAirplanes = async (data, id) => {
   try {
     const allowedFields = ['modelNumber', 'capacity'];
-    const fieldsToUpdate = GetAllowedFieldsToEdit(allowedFields, data);
+    const fieldsToUpdate = GetAllowedFieldsToEdit.allowedFields(
+      allowedFields,
+      data
+    );
     const response = await airplaneRepository.update(fieldsToUpdate, id);
     return response;
   } catch (error) {
