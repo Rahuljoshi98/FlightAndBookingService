@@ -12,4 +12,7 @@ router.post(
   FlightController.createFlight
 );
 
+//  /api/v1/flight?trips=VNS-DEL&price=1300-2000 - GET
+router.get('/', FlightController.getFlights);
+
 module.exports = router;

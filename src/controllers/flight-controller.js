@@ -40,6 +40,23 @@ const createFlight = async (req, res) => {
   }
 };
 
+/*
+ * GET : /flight?trips=VNS-DEL&price=1300-2000
+ */
+const getFlights = async (req, res) => {
+  try {
+    const flights = await FlightService.getAllFlights(req.query);
+    SuccessResponse.message = 'Flight Fetched Successfully';
+    SuccessResponse.data = flights;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.message = 'Something Went Wrong';
+    ErrorResponse.error = error;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+};
+
 module.exports = {
-  createFlight
+  createFlight,
+  getFlights
 };
